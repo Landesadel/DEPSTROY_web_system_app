@@ -47,11 +47,13 @@ class WasteController extends Controller
                 ]);
 
                 session()->flash('status', 'Видео успешно отправлено на обработку');
+                session()->forget('status');
                 return redirect()->route('/waste');
             }
         }
 
         session()->flash('status', 'Не удалось отправить видео на обработку');
+        session()->forget('status');
         return redirect()->route('/waste');
     }
 
@@ -84,10 +86,11 @@ class WasteController extends Controller
             }
         }
 
-        if (!(bool)$data['is_exactly']) {
+        if (!$data['is_exactly']) {
                 $filename = $request->file('file')->store('files');
 
                 $result = File::create([
+                    'waste_id' => $record['id'],
                     'file_url' => $filename,
                 ]);
 

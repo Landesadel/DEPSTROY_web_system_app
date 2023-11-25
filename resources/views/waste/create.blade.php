@@ -1,5 +1,10 @@
 @extends('main')
 @section('content')
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 class="h2">Загрузить данные</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
@@ -34,3 +39,8 @@
     </div>
 @endsection
 
+<script>
+    setTimeout(function() {
+        $('.alert').fadeOut('fast');
+    }, 1000)
+</script>

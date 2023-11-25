@@ -21,11 +21,7 @@
                     @endif
                 </div>
             </div>
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-            @endif
+
         </div>
         <div class="d-flex justify-content-end flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
             <div class="btn-toolbar mt-3 mb-2 mb-md-0">
@@ -114,8 +110,3 @@
     </div>
 @endsection
 
-<script>
-    setTimeout(function() {
-        $('.alert').fadeOut('fast');
-    }, 7000) //скроем сообщение через 7 сек
-</script>
