@@ -24,9 +24,16 @@ services:
         depends_on:
             - mysql
             - redis
+            - model
             - meilisearch
             - mailpit
             - selenium
+    model:
+        image: heinrichwirth/ml_hack
+        ports:
+            - '8000:8000'
+        networks:
+            - sail
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:

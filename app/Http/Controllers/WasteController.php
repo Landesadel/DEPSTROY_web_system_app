@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Waste\CreateRequest;
+use App\Models\Camera;
 use App\Models\File;
 use App\Models\Waste;
 use App\QueryBuilders\CameraQueryBuilder;
@@ -32,19 +33,19 @@ class WasteController extends Controller
         $validate = $request->validated();
 
         if ($validate) {
-            // Запись в БД
-            $record = Waste::create([
-                'date' => $validate['date'],
-                'number_car' => $validate['number_car'],
-            ]);
-
             // Отправка видео на другое апи
             $response = Http::attach(
-                'video', file_get_contents($validate['video']), $validate['number_car']
-            )->post('http://localhost:5000/model'); //todo обсудить апишку модели
+                'video', file_get_contents($validate['file']), $validate['number_car']
+            )->post(url(\App\Classes\Helpers::getHost() . ':8000/process-video'));
 
             // Проверка успешности запроса
             if ($response->successful()) {
+                // Запись в БД
+                $record = Waste::create([
+                    'date' => $validate['date'],
+                    'number_car' => $validate['number_car'],
+                ]);
+
                 session()->flash('status', 'Видео успешно отправлено на обработку');
                 return redirect()->route('/waste');
             }
@@ -71,15 +72,26 @@ class WasteController extends Controller
         // Обновление записи
         $record?->update($data); //todo проверить массив дата
 
+        if (!empty($data['is_visibility'])) {
+            $lastRecord = Camera::query()
+                ->first();
+            if ($lastRecord) {
+                $lastRecord?->update(['status' => (bool)$data['is_visibility']]);
+            } else {
+                Camera::create([
+                    'status' => (bool)$data['is_visibility'],
+                ]);
+            }
+        }
+
         if (!(bool)$data['is_exactly']) {
                 $filename = $request->file('file')->store('files');
 
                 $result = File::create([
-                    'filename' => $filename,
+                    'file_url' => $filename,
                 ]);
 
-
-            if ($result) {
+            if (!$result) {
                 return response()->json(['message' => 'ошибка загрузки файла']);
             }
         }

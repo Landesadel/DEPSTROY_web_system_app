@@ -26,11 +26,12 @@ class Waste extends Model
 
     /**
      * @param int $wasteId
-     * @return File|null
+     * @return Model|null
      */
-    public function getFile(int $wasteId): File|null
+    public function getFile(int $wasteId): Model|null
     {
-        $file = File::where('waste_id', $wasteId)
+        $file = File::query()
+            ->where('waste_id', $wasteId)
             ->first();
 
         return $file ?? null;

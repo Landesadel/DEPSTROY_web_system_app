@@ -15,15 +15,15 @@
                 <x-alert type="danger" :message="$error"></x-alert>
             @endforeach
         @endif
-        <form class="w-50 border shadow p-4" method="post" action="{{url(\App\Classes\Helpers::getHost() . '/upload/waste')}}" enctype="multipart/form-data">
+        <form class="w-50 border shadow p-4" method="post" action="{{ url(\App\Classes\Helpers::getHost() . '/api/upload') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group mt-2">
                 <label for="date">Дата</label>
                 <input type="text" id="date" name="date" value="{{ old('date') }}" class="form-control @error('date') is-invalid @enderror">
             </div>
             <div class="form-group mt-2">
-                <label for="car_number">Номер машины</label>
-                <input type="text" id="car_number" name="car_number" value="{{ old('car_number') }}" class="form-control @error('car_number') is-invalid @enderror">
+                <label for="number_car">Номер машины</label>
+                <input type="text" id="number_car" name="number_car" value="{{ old('number_car') }}" class="form-control @error('number_car') is-invalid @enderror">
             </div>
             <div class="form-group mt-2">  {{-- todo доделать--}}
                 <label for="file">Видео файл*</label>

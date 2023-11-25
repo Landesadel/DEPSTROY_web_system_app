@@ -9,3 +9,4 @@ Route::get('/', HomeController::class)->name('index');
 Route::get('/create', [WasteController::class, 'create'])->name('create');
 Route::get('/waste', [WasteController::class, 'getCollection']);
 Route::get('/export', [ExcelController::class, 'export'])->name('export');
+

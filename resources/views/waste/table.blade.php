@@ -90,7 +90,17 @@
                                     @break
                             @endswitch
                         </td>
-                        <td>{{ ($waste->getFile($waste->id))->url ?? '-' }}</td>
+                        <td>
+                            @if($waste->getFile($waste->id))
+                                <div class="image-container">
+                                    <a href="{{ '/storage/' . ($waste->getFile($waste->id))->file_url }}" target="_blank">
+                                        <img src="{{ '/storage/' . ($waste->getFile($waste->id))->file_url }}" width="80" height="80" alt="screen">
+                                    </a>
+                                </div>
+                            @else
+                                '-'
+                            @endif
+                        </td>
                     </tr>
                 @empty
                     <tr>

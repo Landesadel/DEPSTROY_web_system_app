@@ -24,7 +24,7 @@ class CreateRequest extends FormRequest
         return [
             'date' => 'required|date',
             'number_car' => 'required|string',
-            'video' => 'required|mimes:mp4,avi,mov,flv',//todo продумать про размер файла
+            'file' => 'required|file',//todo продумать про размер файла
         ];
     }
 }
