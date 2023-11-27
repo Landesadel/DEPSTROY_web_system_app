@@ -29,7 +29,7 @@ services:
             - mailpit
             - selenium
     model:
-        image: heinrichwirth/ml_hack
+        image: '${MODEL_REPO}'
         ports:
             - '8000:8000'
         networks:
